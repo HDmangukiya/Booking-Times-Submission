@@ -1,0 +1,34 @@
+/* Create a table called Clients */
+
+CREATE table Clients(Id integer PRIMARY KEY, name text, email text);
+
+/* Create few records in this table */
+INSERT INTO Clients VALUES(1,'John','John-email');
+INSERT INTO Clients VALUES(2,'John','John-email');
+INSERT INTO Clients VALUES(3,'fred','John-email');
+INSERT INTO Clients VALUES(4,'freds','fred-email');
+INSERT INTO Clients VALUES(5,'sam','sam-email');
+INSERT INTO Clients VALUES(6,'Hardik','hardik-email');
+INSERT INTO Clients VALUES(7,'sam','sams-email');
+COMMIT;
+
+/* Display all the records from the table 
+SELECT * FROM Clients cl;
+*/   
+
+/*Query to Find the records in Client Table with Duplicate Name*/
+SELECT
+    cl.*
+    FROM Clients cl
+        INNER JOIN (SELECT
+                        name,email, COUNT(*) AS CountOf
+                        FROM Clients
+                        GROUP BY name
+                        HAVING COUNT(*)>1
+                    ) dt ON cl.name=dt.name 
+                  
+				  
+				  
+				  
+				  
+/*https://www.tutorialspoint.com/execute_sql_online.php*/
