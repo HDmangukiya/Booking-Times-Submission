@@ -34,14 +34,14 @@
         If Len(MyNumber) > 0 And Len(MyNumber) <= 2 Then
             If Len(TM) = 1 Then
                 Words = ConvertDigit(TM)
-                NumberToWord = Words & Digits & "Dollars "
+                NumberToWord = Words & Digits
 
                 Exit Function
 
             Else
                 If Len(TM) = 2 Then
                     Words = ConvertTens(TM)
-                    NumberToWord = Words & Digits & "Dollars "
+                    NumberToWord = Words & Digits
                     Exit Function
 
                 End If
@@ -68,12 +68,12 @@
 
 
                     Words = ConvertDigit(Temp) & place(iCount)
-                    MyNumber = Left(MyNumber, Len(MyNumber) - 1) & "Dollars "
+                    MyNumber = Left(MyNumber, Len(MyNumber) - 1)
 
                 Else
 
                     Words = ConvertDigit(Temp) & place(iCount) & Words
-                    MyNumber = Left(MyNumber, Len(MyNumber) - 1) & "Dollars "
+                    MyNumber = Left(MyNumber, Len(MyNumber) - 1)
 
                 End If
             Else
@@ -86,7 +86,7 @@
                     Words = ConvertTens(Temp) & place(iCount)
 
 
-                    MyNumber = Left(MyNumber, Len(MyNumber) - 2) & "Dollars "
+                    MyNumber = Left(MyNumber, Len(MyNumber) - 2)
                 Else
 
                     '=================================================================
@@ -95,10 +95,10 @@
                     If Trim(ConvertTens(Temp) & place(iCount)) = "Hundred" Then
 
                         Words = Words
-                        MyNumber = Left(MyNumber, Len(MyNumber) - 2) & "Dollars "
+                        MyNumber = Left(MyNumber, Len(MyNumber) - 2)
                     Else
                         Words = ConvertTens(Temp) & place(iCount) & Words
-                        MyNumber = Left(MyNumber, Len(MyNumber) - 2) & "Dollars "
+                        MyNumber = Left(MyNumber, Len(MyNumber) - 2)
                     End If
 
                 End If
@@ -107,18 +107,18 @@
             iCount = iCount + 2
         Loop
 
-        'NumberToWord = "Dollars " & Words & Hundreds & Digits & "Cents"
-        NumberToWord = Words & Hundreds & Digits
+        NumberToWord = Words & Hundreds & Digits & "" & "Dollars "
     End Function
 
     ' Conversion for hundreds
+    '*****************************************
     Private Function ConvertHundreds(ByVal MyNumber)
         Dim Result As String
 
         ' Exit if there is nothing to convert.
         If Val(MyNumber) = 0 Then Exit Function
 
-        ' Zeros to number.
+        ' Append leading zeros to number.
         MyNumber = Right("000" & MyNumber, 3)
 
         ' Do we have a hundreds place digit to convert?
@@ -130,7 +130,7 @@
         If Mid(MyNumber, 2, 1) <> "0" Then
             Result = Result & ConvertTens(Mid(MyNumber, 2))
         Else
-            'Nope, then convert the ones place digit.
+            ' If not, then convert the ones place digit.
             Result = Result & ConvertDigit(Mid(MyNumber, 3))
         End If
 
